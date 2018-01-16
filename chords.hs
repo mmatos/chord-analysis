@@ -10,17 +10,31 @@ instance WithNotes Chord where
   notes chord = (map snd.sortOn fst.foldl (\numberedNotes chalt-> chordAlterations chalt numberedNotes) (zip [1,3,5] baseChord).alterations) chord
     where baseChord = (map ($(note chord)) [id, major 3, perfectFifth])
 
+alterChord alteration chord = chord {alterations = alterations chord ++ [alteration]}
 
+-------------------------
+-- Common chord creation
+-------------------------
 
 majorChord note = Ch note []
 minorChord note = Ch note [ChAlt "-" lowerThird]
-dimChord note = Ch note [ChAlt "°" (lowerThird.lowerFifth)]
-dim7Chord note = Ch note [ChAlt "°7" (add 6 major.lowerThird.lowerFifth)]
 augChord note = Ch note [ChAlt "+" (semitoneUp 5)]
-
+dimChord note = Ch note [ChAlt "°" (lowerThird.lowerFifth)]
 susChord n note | n == 2 || n == 4 = alteredChord
-  where alteredChord = alterChord (ChAlt ("sus"++show n)(replace 3 (\_ -> interval n . Modal Ionian))) (majorChord note)
+  where alteredChord = alterChord (ChAlt ("sus"++show n)(replace 3 (\_ -> major n))) (majorChord note)
 
+dim7Chord = alterChord (ChAlt "7" (add 6 major)).dimChord
+halfDim7Chord = alterChord flatFive.alterChord seventh.minorChord
+
+chord7 = alterChord seventh
+chordMaj7 = alterChord majorSeventh
+
+--------------------------------
+-- Additional chord alterations
+-- Use with alterChord
+--------------------------------
+
+flatFive = ChAlt "(b5)" lowerFifth
 sixth = ChAlt "6" (add 6 major)
 seventh = ChAlt "7" (add 7 minor)
 majorSeventh = ChAlt "maj7" (add 7 major)
@@ -28,19 +42,32 @@ majorSeventh = ChAlt "maj7" (add 7 major)
 overtone n = ChAlt ("("++show n++")") (add n major)
 augOvertone n = ChAlt ("(#"++show n++")") (semitoneUp n . add n major)
 
+----------------------------
+-- Common alteration combos
+----------------------------
+
+upToOvertone n startChord = (foldl (flip alterChord) (chord7 startChord).map overtone.filter odd) [9 .. n]
+
+-----------------------------
+-- Base alteration functions
+-----------------------------
+
 major n  = interval n . Modal Ionian
 minor n  = interval n . Modal Aeolian
 lowerThird = replace 3 minor
 lowerFifth = replace 5 (\n -> interval n.Modal Locrian)
-semitoneUp n = replace n (\m -> semitone.interval m.Modal Ionian)
+
+-- Is it ok to make this always major?
+semitoneUp n = replace n (\m -> semitone.major m)
 
 replace n intervalFunction numberedNotes = add n intervalFunction (filter ((/= n).fst) numberedNotes)
 
 add n intervalFunction numberedNotes = (n, (intervalFunction n) firstNote) : numberedNotes
   where firstNote = (snd.head.filter ((==1).fst)) numberedNotes
   
-alterChord alteration chord = chord {alterations = alterations chord ++ [alteration]}
-
+----------------------
+-- Chord progressions
+----------------------
 
 modalChordProgression Ionian = [majorChord, minorChord, minorChord, majorChord, majorChord, minorChord, dimChord]
 modalChordProgression mode = shiftWith modalChordProgression mode
