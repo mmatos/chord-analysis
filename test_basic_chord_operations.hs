@@ -52,8 +52,12 @@ main = hspec $ do
       notes (alterChord sixth (majorChord (N C Nat))) `shouldBe` [N C Nat, N E Nat, N G Nat, N A Nat]
     it "C-6 has C, Eb and G and A" $ do
       notes (alterChord sixth (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N A Nat]
-    it "C9" $ do
+
+  describe "Chord with ninth" $ do
+    it "C-(9) should have C, Eb, G and D" $ do
       notes (alterChord ninth (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N D Nat]
+    it "C-(#9) should have C, Eb, G and D#" $ do
+      notes (alterChord augNinth (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N D Sharp]
 
   describe "Chord printing" $ do
     it "Print major chord" $ do
@@ -70,3 +74,7 @@ main = hspec $ do
       show (alterChord seventh (minorChord (N B Flat))) `shouldBe` "Bb-7"
     it "Print chord with major 7th" $ do
       show (alterChord majorSeventh (minorChord (N B Flat))) `shouldBe` "Bb-maj7"
+    it "Print chord with 9th" $ do
+      show (alterChord ninth (minorChord (N B Flat))) `shouldBe` "Bb-(9)"
+    it "Print chord with augmented 9th" $ do
+      show (alterChord augNinth (minorChord (N B Flat))) `shouldBe` "Bb-(#9)"

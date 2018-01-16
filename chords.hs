@@ -29,7 +29,8 @@ sixth = ChAlt "6" (add 6 major)
 seventh = ChAlt "7" (add 7 minor)
 majorSeventh = ChAlt "maj7" (add 7 major)
 
-ninth = ChAlt "9" (add 9 major)
+ninth = ChAlt "(9)" (add 9 major)
+augNinth = ChAlt "(#9)" (semitoneUp 9 . add 9 major)
 
 lowerThird = replace 3 minor
 lowerFifth = replace 5 (\n -> interval n.Modal Locrian)
