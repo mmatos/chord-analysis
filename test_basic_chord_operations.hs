@@ -35,6 +35,16 @@ main = hspec $ do
     it "Bb aug has Bb, D and F#" $ do
       notes (augChord (N B Flat)) `shouldBe` [N B Flat, N D Nat, N F Sharp]
   
+  describe "Sus Chord creation" $ do
+    it "C sus2 has C, E and G" $ do
+      notes (susChord 2 (N C Nat)) `shouldBe` [N C Nat, N D Nat, N G Nat]
+    it "Bb sus2 has Bb, C and F" $ do
+      notes (susChord 2 (N B Flat)) `shouldBe` [N B Flat, N C Nat, N F Nat]
+    it "C sus4 has C, F and G" $ do
+      notes (susChord 4 (N C Nat)) `shouldBe` [N C Nat, N F Nat, N G Nat]
+    it "Bb sus4 has Bb, Eb and F" $ do
+      notes (susChord 4 (N B Flat)) `shouldBe` [N B Flat, N E Flat, N F Nat]
+
   describe "Chord with minor seventh" $ do
     it "C7 has C, E, G and Bb" $ do
       notes (alterChord seventh (majorChord (N C Nat))) `shouldBe` [N C Nat, N E Nat, N G Nat, N B Flat]
@@ -55,9 +65,15 @@ main = hspec $ do
 
   describe "Chord with ninth" $ do
     it "C-(9) should have C, Eb, G and D" $ do
-      notes (alterChord ninth (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N D Nat]
+      notes (alterChord (overtone 9) (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N D Nat]
     it "C-(#9) should have C, Eb, G and D#" $ do
-      notes (alterChord augNinth (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N D Sharp]
+      notes (alterChord (augOvertone 9) (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N D Sharp]
+
+  describe "Chord with eleventh" $ do
+    it "C-(11) should have C, Eb, G and F" $ do
+      notes (alterChord (overtone 11) (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N F Nat]
+    it "C-(#11) should have C, Eb, G and F#" $ do
+      notes (alterChord (augOvertone 11) (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N F Sharp]
 
   describe "Chord printing" $ do
     it "Print major chord" $ do
@@ -68,6 +84,10 @@ main = hspec $ do
       show (dimChord (N B Flat)) `shouldBe` "Bb°"
     it "Print augmented chord" $ do
       show (augChord (N B Flat)) `shouldBe` "Bb+"
+    it "Print sus2 chord" $ do
+      show (susChord 2 (N B Flat)) `shouldBe` "Bbsus2"
+    it "Print sus4 chord" $ do
+      show (susChord 4 (N B Flat)) `shouldBe` "Bbsus4"
     it "Print chord with 6th" $ do
       show (alterChord sixth (minorChord (N B Flat))) `shouldBe` "Bb-6"
     it "Print chord with 7th" $ do
@@ -75,6 +95,10 @@ main = hspec $ do
     it "Print chord with major 7th" $ do
       show (alterChord majorSeventh (minorChord (N B Flat))) `shouldBe` "Bb-maj7"
     it "Print chord with 9th" $ do
-      show (alterChord ninth (minorChord (N B Flat))) `shouldBe` "Bb-(9)"
+      show (alterChord (overtone 9) (minorChord (N B Flat))) `shouldBe` "Bb-(9)"
     it "Print chord with augmented 9th" $ do
-      show (alterChord augNinth (minorChord (N B Flat))) `shouldBe` "Bb-(#9)"
+      show (alterChord (augOvertone 9) (minorChord (N B Flat))) `shouldBe` "Bb-(#9)"
+    it "Print chord with 11th" $ do
+      show (alterChord (overtone 11) (minorChord (N B Flat))) `shouldBe` "Bb-(11)"
+    it "Print chord with augmented 11th" $ do
+      show (alterChord (augOvertone 11) (minorChord (N B Flat))) `shouldBe` "Bb-(#11)"
