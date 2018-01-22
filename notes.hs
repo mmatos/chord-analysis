@@ -34,7 +34,7 @@ tone upOrDown preferredAlteration = semi.semi
   where semi = semitone upOrDown preferredAlteration
 
 up = (+1)
-down = (-1)
+down = flip (-) 1
 
 ---- Pritty print
 
