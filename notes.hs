@@ -2,7 +2,7 @@ module Notes where
 import Data.List
 import Data.Maybe
 
-data BasicNote = C | D | E | F | G | A | B deriving (Enum, Ord, Show, Eq, Bounded)
+data BasicNote = C | D | E | F | G | A | B deriving (Enum, Show, Eq)
 data NoteAlteration = Flat | Nat | Sharp deriving Eq
 data Note = N {basicNote::BasicNote, alt::NoteAlteration} deriving Eq
 
@@ -50,15 +50,3 @@ instance Read Note where
   readsPrec _ string = map (\note -> (note , "")) (filter ((== string).show) allNotes)
 
 readNote = (\s -> read s :: Note)
-----  AUX
-
-next :: (Enum a, Bounded a) => a -> a
-next = turn 1
-
-prev :: (Enum a, Bounded a) => a -> a
-prev = turn (-1)
-
-turn :: (Enum a, Bounded a) => Int -> a -> a
-turn n e = toEnum (add (fromEnum (maxBound `asTypeOf` e) + 1) (fromEnum e) n)
-    where
-      add mod x y = (x + y + mod) `rem` mod

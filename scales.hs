@@ -1,7 +1,7 @@
 module Scales where
 import Notes
 
-data Mode = Ionian | Dorian | Phrygian | Lydian | Mixolydian | Aeolian | Locrian deriving (Eq, Show, Enum, Bounded)
+data Mode = Ionian | Dorian | Phrygian | Lydian | Mixolydian | Aeolian | Locrian deriving (Eq, Show, Enum)
 data Scale = Modal Mode Note
 
 instance WithNotes Scale where
@@ -33,7 +33,7 @@ circleOfFifths = flip foldNotesFrom ((take 6 (fifthsWith Sharp)) ++ (take 6 (dro
 perfectFifth preferredAlteration = head.drop 7.chromatics preferredAlteration
 
 ----  AUX
-shiftWith f = shiftFirst.f.prev
+shiftWith f = shiftFirst.f.pred
 shiftFirst (x:xs) = xs ++ [x]
 
 foldNotesFrom startNote = foldl (\notes f -> notes ++ [(f.last) notes]) [startNote]
