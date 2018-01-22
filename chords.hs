@@ -8,7 +8,7 @@ data ChordAlteration = ChAlt {nameAlt::String, chordAlterations::([(Int,Note)] -
 
 instance WithNotes Chord where
   notes chord = (map snd.sortOn fst.foldl (\numberedNotes chalt-> chordAlterations chalt numberedNotes) (zip [1,3,5] baseChord).alterations) chord
-    where baseChord = (map ($(note chord)) [id, major 3, (\note -> perfectFifth (alt note) note)])
+    where baseChord = (map ($(note chord)) [id, major 3, (\note -> perfectFifth (sharpsOrFlats (Modal Ionian note)) note)])
 
 instance Eq Chord where
   (==) chord1 chord2 = notes chord1 == notes chord2
