@@ -50,3 +50,4 @@ instance Read Note where
   readsPrec _ string = map (\note -> (note , "")) (filter ((== string).show) allNotes)
 
 readNote = (\s -> read s :: Note)
+readNotes = map readNote

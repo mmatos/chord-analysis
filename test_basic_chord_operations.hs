@@ -5,95 +5,95 @@ import Test.Hspec
 main = hspec $ do
   describe "Major Chord creation" $ do
     it "C major has C, E and G" $ do
-      notes (majorChord (N C Nat)) `shouldBe` [N C Nat, N E Nat, N G Nat]
+      notes (majorChord (N C Nat)) `shouldBe` (readNotes ["C", "E", "G"])
     it "G major has G, B and D" $ do
-      notes (majorChord (N G Nat)) `shouldBe` [N G Nat, N B Nat, N D Nat]
+      notes (majorChord (N G Nat)) `shouldBe` (readNotes ["G", "B", "D"])
     it "Bb major has Bb, D and F" $ do
-      notes (majorChord (N B Flat)) `shouldBe` [N B Flat, N D Nat, N F Nat]
+      notes (majorChord (N B Flat)) `shouldBe` (readNotes ["Bb", "D", "F"])
   
   describe "Minor Chord creation" $ do
     it "C minor has C, Eb and G" $ do
-      notes (minorChord (N C Nat)) `shouldBe` [N C Nat, N E Flat, N G Nat]
+      notes (minorChord (N C Nat)) `shouldBe` (readNotes ["C", "Eb", "G"])
     it "G minor has G, Bb and D" $ do
-      notes (minorChord (N G Nat)) `shouldBe` [N G Nat, N B Flat, N D Nat]
+      notes (minorChord (N G Nat)) `shouldBe` (readNotes ["G", "Bb", "D"])
     it "Bb minor has Bb, Db and F" $ do
-      notes (minorChord (N B Flat)) `shouldBe` [N B Flat, N D Flat, N F Nat]
+      notes (minorChord (N B Flat)) `shouldBe` (readNotes ["Bb", "Db", "F"])
 
   describe "Augmented Chord creation" $ do
     it "C aug has C, E and G#" $ do
-      notes (augChord (N C Nat)) `shouldBe` [N C Nat, N E Nat, N G Sharp]
+      notes (augChord (N C Nat)) `shouldBe` (readNotes ["C", "E", "G#"])
     it "G aug has G, B and D#" $ do
-      notes (augChord (N G Nat)) `shouldBe` [N G Nat, N B Nat, N D Sharp]
+      notes (augChord (N G Nat)) `shouldBe` (readNotes ["G", "B", "D#"])
     it "Bb aug has Bb, D and F#" $ do
-      notes (augChord (N B Flat)) `shouldBe` [N B Flat, N D Nat, N F Sharp]
+      notes (augChord (N B Flat)) `shouldBe` (readNotes ["Bb", "D", "F#"])
     
   describe "Diminished Chord creation" $ do
     it "C dim has C, Eb and Gb" $ do
-      notes (dimChord (N C Nat)) `shouldBe` [N C Nat, N E Flat, N G Flat]
+      notes (dimChord (N C Nat)) `shouldBe` (readNotes ["C", "Eb", "Gb"])
     it "G dim has G, Bb and Db" $ do
-      notes (dimChord (N G Nat)) `shouldBe` [N G Nat, N B Flat, N D Flat]
+      notes (dimChord (N G Nat)) `shouldBe` (readNotes ["G", "Bb", "Db"])
     it "Bb dim has Bb, Db and E" $ do
-      notes (dimChord (N B Flat)) `shouldBe` [N B Flat, N D Flat, N E Nat]
+      notes (dimChord (N B Flat)) `shouldBe` (readNotes ["Bb", "Db", "E"])
   
   describe "Sus Chord creation" $ do
-    it "C sus2 has C, E and G" $ do
-      notes (susChord 2 (N C Nat)) `shouldBe` [N C Nat, N D Nat, N G Nat]
+    it "C sus2 has C, D and G" $ do
+      notes (susChord 2 (N C Nat)) `shouldBe` (readNotes ["C", "D", "G"])
     it "Bb sus2 has Bb, C and F" $ do
-      notes (susChord 2 (N B Flat)) `shouldBe` [N B Flat, N C Nat, N F Nat]
+      notes (susChord 2 (N B Flat)) `shouldBe` (readNotes ["Bb", "C", "F"])
     it "C sus4 has C, F and G" $ do
-      notes (susChord 4 (N C Nat)) `shouldBe` [N C Nat, N F Nat, N G Nat]
+      notes (susChord 4 (N C Nat)) `shouldBe` (readNotes ["C", "F", "G"])
     it "Bb sus4 has Bb, Eb and F" $ do
-      notes (susChord 4 (N B Flat)) `shouldBe` [N B Flat, N E Flat, N F Nat]
+      notes (susChord 4 (N B Flat)) `shouldBe` (readNotes ["Bb", "Eb", "F"])
 
   describe "Chord with minor seventh" $ do
     it "C7 has C, E, G and Bb" $ do
-      notes (chord7 (majorChord (N C Nat))) `shouldBe` [N C Nat, N E Nat, N G Nat, N B Flat]
+      notes (chord7 (majorChord (N C Nat))) `shouldBe`  (readNotes ["C", "E", "G", "Bb"])
     it "C-7 has C, Eb and G and Bb" $ do
-      notes (chord7 (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N B Flat]
+      notes (chord7 (minorChord (N C Nat))) `shouldBe` (readNotes ["C", "Eb", "G", "Bb"])
     it "C+7 has C, E and G# and Bb" $ do
-      notes (chord7 (augChord (N C Nat))) `shouldBe` [N C Nat, N E Nat, N G Sharp, N B Flat]
+      notes (chord7 (augChord (N C Nat))) `shouldBe` (readNotes ["C", "E", "G#", "Bb"])
 
   describe "Chord with major seventh" $ do
     it "Cmaj7 has C, E, G and B" $ do
-      notes (chordMaj7 (majorChord (N C Nat))) `shouldBe` [N C Nat, N E Nat, N G Nat, N B Nat]
+      notes (chordMaj7 (majorChord (N C Nat))) `shouldBe` (readNotes ["C", "E", "G", "B"])
     it "C-maj7 has C, Eb and G and B" $ do
-      notes (chordMaj7 (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N B Nat]
+      notes (chordMaj7 (minorChord (N C Nat))) `shouldBe` (readNotes ["C", "Eb", "G", "B"])
 
   describe "Chord with sixth" $ do
     it "C6 has C, E, G and A" $ do
-      notes (alterChord sixth (majorChord (N C Nat))) `shouldBe` [N C Nat, N E Nat, N G Nat, N A Nat]
+      notes (alterChord sixth (majorChord (N C Nat))) `shouldBe` (readNotes ["C", "E", "G", "A"])
     it "C-6 has C, Eb and G and A" $ do
-      notes (alterChord sixth (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N A Nat]
+      notes (alterChord sixth (minorChord (N C Nat))) `shouldBe` (readNotes ["C", "Eb", "G", "A"])
 
   describe "Half-diminished chord creation" $ do
     it "C-7(b5) has C, Eb and Gb and Bb" $ do
-      notes (halfDim7Chord (N C Nat)) `shouldBe` [N C Nat, N E Flat, N G Flat, N B Flat]
+      notes (halfDim7Chord (N C Nat)) `shouldBe` (readNotes ["C", "Eb", "Gb", "Bb"])
     it "Bb-7(b5) has Bb, Db, E and Ab" $ do
-      notes (halfDim7Chord (N B Flat)) `shouldBe` [N B Flat, N D Flat, N E Nat, N A Flat]
+      notes (halfDim7Chord (N B Flat)) `shouldBe` (readNotes ["Bb", "Db", "E", "Ab"])
 
   describe "Dim7 chord creation" $ do
     it "C°7 has C, Eb and Gb and A" $ do
-      notes (dim7Chord (N C Nat)) `shouldBe` [N C Nat, N E Flat, N G Flat, N A Nat]
+      notes (dim7Chord (N C Nat)) `shouldBe` (readNotes ["C", "Eb", "Gb", "A"])
     it "Bb°7 has Bb, Db, E and G" $ do
-      notes (dim7Chord (N B Flat)) `shouldBe` [N B Flat, N D Flat, N E Nat, N G Nat]
+      notes (dim7Chord (N B Flat)) `shouldBe` (readNotes ["Bb", "Db", "E", "G"])
 
   describe "Chord with ninth" $ do
     it "C-(9) should have C, Eb, G and D" $ do
-      notes (alterChord (overtone 9) (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N D Nat]
+      notes (alterChord (overtone 9) (minorChord (N C Nat))) `shouldBe` (readNotes ["C", "Eb", "G", "D"])
     it "C-(#9) should have C, Eb, G and D#" $ do
-      notes (alterChord (augOvertone 9) (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N D Sharp]
+      notes (alterChord (augOvertone 9) (minorChord (N C Nat))) `shouldBe` (readNotes ["C", "Eb", "G", "D#"])
 
   describe "Chord with eleventh" $ do
     it "C-(11) should have C, Eb, G and F" $ do
-      notes (alterChord (overtone 11) (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N F Nat]
+      notes (alterChord (overtone 11) (minorChord (N C Nat))) `shouldBe` (readNotes ["C", "Eb", "G", "F"])
     it "C-(#11) should have C, Eb, G and F#" $ do
-      notes (alterChord (augOvertone 11) (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N F Sharp]
+      notes (alterChord (augOvertone 11) (minorChord (N C Nat))) `shouldBe` (readNotes ["C", "Eb", "G", "F#"])
 
   describe "Chord up to eleventh" $ do
     it "C7(9)(11) should have C, E, G, Bb, D and F" $ do
-      notes (upToOvertone 11 (majorChord (N C Nat))) `shouldBe` [N C Nat, N E Nat, N G Nat, N B Flat, N D Nat, N F Nat]
+      notes (upToOvertone 11 (majorChord (N C Nat))) `shouldBe` (readNotes ["C", "E", "G", "Bb", "D", "F"])
     it "C-7(9)(11) should have C, Eb, G, Bb, D and F" $ do
-      notes (upToOvertone 11 (minorChord (N C Nat))) `shouldBe` [N C Nat, N E Flat, N G Nat, N B Flat, N D Nat, N F Nat]
+      notes (upToOvertone 11 (minorChord (N C Nat))) `shouldBe` (readNotes ["C", "Eb", "G", "Bb", "D", "F"])
 
   describe "Chord printing" $ do
     it "Print major chord" $ do
