@@ -21,40 +21,40 @@ main = hspec $ do
 
   describe "Natural notes for each mode" $ do
     it "C is natural for Ionian" $ do
-      naturalNote Ionian `shouldBe` (N C Nat)
+      naturalNote Ionian `shouldBe` (readNote "C")
     it "D is natural for Dorian" $ do
-      naturalNote Dorian `shouldBe` (N D Nat)
+      naturalNote Dorian `shouldBe` (readNote "D")
     it "E is natural for Phrygian" $ do
-      naturalNote Phrygian `shouldBe` (N E Nat)
+      naturalNote Phrygian `shouldBe` (readNote "E")
     it "F is natural for Lydian" $ do
-      naturalNote Lydian `shouldBe` (N F Nat)
+      naturalNote Lydian `shouldBe` (readNote "F")
     it "G is natural for Mixolydian" $ do
-      naturalNote Mixolydian `shouldBe` (N G Nat)
+      naturalNote Mixolydian `shouldBe` (readNote "G")
     it "A is natural for Aeolian" $ do
-      naturalNote Aeolian `shouldBe` (N A Nat)
+      naturalNote Aeolian `shouldBe` (readNote "A")
     it "B is natural for Locrian" $ do
-      naturalNote Locrian `shouldBe` (N B Nat)
+      naturalNote Locrian `shouldBe` (readNote "B")
 
   describe "Notes in a scale" $ do
     it "C Ionian has all natural notes" $ do
-      notes (Modal Ionian (N C Nat)) `shouldBe` (map (flip N Nat) [C, D, E, F, G, A, B, C])
+      notes (Modal Ionian (N C Nat)) `shouldBe` (map readNote ["C", "D", "E", "F", "G", "A", "B", "C"])
     it "D Dorian has all natural notes" $ do
-      notes (Modal Dorian (N D Nat)) `shouldBe` (map (flip N Nat) [D, E, F, G, A, B, C, D])
+      notes (Modal Dorian (N D Nat)) `shouldBe` (map readNote ["D", "E", "F", "G", "A", "B", "C", "D"])
     it "E Phrygian has all natural notes" $ do
-      notes (Modal Phrygian (N E Nat)) `shouldBe` (map (flip N Nat) [E, F, G, A, B, C, D, E])
+      notes (Modal Phrygian (N E Nat)) `shouldBe` (map readNote ["E", "F", "G", "A", "B", "C", "D", "E"])
     it "F Lydian has all natural notes" $ do
-      notes (Modal Lydian (N F Nat)) `shouldBe` (map (flip N Nat) [F, G, A, B, C, D, E, F])
+      notes (Modal Lydian (N F Nat)) `shouldBe` (map readNote ["F", "G", "A", "B", "C", "D", "E", "F"])
     it "G Mixolydian has all natural notes" $ do
-      notes (Modal Mixolydian (N G Nat)) `shouldBe` (map (flip N Nat) [G, A, B, C, D, E, F, G])
+      notes (Modal Mixolydian (N G Nat)) `shouldBe` (map readNote ["G", "A", "B", "C", "D", "E", "F", "G"])
     it "A Aeolian has all natural notes" $ do
-      notes (Modal Aeolian (N A Nat)) `shouldBe` (map (flip N Nat) [A, B, C, D, E, F, G, A])
+      notes (Modal Aeolian (N A Nat)) `shouldBe` (map readNote ["A", "B", "C", "D", "E", "F", "G", "A"])
     it "B Locrian has all natural notes" $ do
-      notes (Modal Locrian (N B Nat)) `shouldBe` (map (flip N Nat) [B, C, D, E, F, G, A, B])
+      notes (Modal Locrian (N B Nat)) `shouldBe` (map readNote ["B", "C", "D", "E", "F", "G", "A", "B"])
     it "F Ionian has flats" $ do
-      notes (Modal Ionian (N F Nat)) `shouldBe` [N F Nat, N G Nat, N A Nat, N B Flat, N C Nat, N D Nat, N E Nat, N F Nat]
+      notes (Modal Ionian (N F Nat)) `shouldBe` (map readNote ["F", "G", "A", "Bb", "C", "D", "E", "F"])
     it "B Aeolian has sharps" $ do
-      notes (Modal Aeolian (N B Nat)) `shouldBe` [N B Nat, N C Sharp, N D Nat, N E Nat, N F Sharp, N G Nat, N A Nat, N B Nat]
+      notes (Modal Aeolian (N B Nat)) `shouldBe` (map readNote ["B", "C#", "D", "E", "F#", "G", "A", "B"])
     it "F# Aeolian has F#, C# and G#" $ do
-      notes (Modal Aeolian (N F Sharp)) `shouldBe` [N F Sharp, N G Sharp, N A Nat, N B Nat, N C Sharp, N D Nat, N E Nat, N F Sharp]
+      notes (Modal Aeolian (N F Sharp)) `shouldBe` (map readNote ["F#", "G#", "A", "B", "C#", "D", "E", "F#"])
     it "Bb Dorian has Bb, Eb, Ab and Db" $ do
-      notes (Modal Dorian (N B Flat)) `shouldBe` [N B Flat, N C Nat, N D Flat, N E Flat, N F Nat, N G Nat, N A Flat, N B Flat]
+      notes (Modal Dorian (N B Flat)) `shouldBe` (map readNote ["Bb", "C", "Db", "Eb", "F", "G", "Ab", "Bb"])

@@ -8,7 +8,7 @@ data ChordAlteration = ChAlt {nameAlt::String, chordAlterations::([(Int,Note)] -
 
 instance WithNotes Chord where
   notes chord = (map snd.sortOn fst.foldl (\numberedNotes chalt-> chordAlterations chalt numberedNotes) (zip [1,3,5] baseChord).alterations) chord
-    where baseChord = (map ($(note chord)) [id, major 3, perfectFifth])
+    where baseChord = (map ($(note chord)) [id, major 3, (\note -> perfectFifth (alt note) note)])
 
 instance Eq Chord where
   (==) chord1 chord2 = notes chord1 == notes chord2
@@ -60,7 +60,7 @@ lowerThird = replace 3 minor
 lowerFifth = replace 5 (\n -> interval n.Modal Locrian)
 
 -- Is it ok to make this always major?
-semitoneUp n = replace n (\m -> semitone.major m)
+semitoneUp n = replace n (\m -> semitone up Sharp . major m)
 
 replace n intervalFunction numberedNotes = add n intervalFunction (filter ((/= n).fst) numberedNotes)
 
