@@ -1,6 +1,7 @@
 import Scales
 import Notes
 import Test.Hspec
+import TestHelpers
 
 main = hspec $ do
   describe "Major and Minor modes" $ do
@@ -37,24 +38,24 @@ main = hspec $ do
 
   describe "Notes in a scale" $ do
     it "C Ionian has all natural notes" $ do
-      notes (Modal Ionian (N C Nat)) `shouldBe` (readNotes ["C", "D", "E", "F", "G", "A", "B"])
+      Modal Ionian (N C Nat) `shouldHaveNotes` ["C", "D", "E", "F", "G", "A", "B"]
     it "D Dorian has all natural notes" $ do
-      notes (Modal Dorian (N D Nat)) `shouldBe` (readNotes ["D", "E", "F", "G", "A", "B", "C"])
+      Modal Dorian (N D Nat) `shouldHaveNotes` ["D", "E", "F", "G", "A", "B", "C"]
     it "E Phrygian has all natural notes" $ do
-      notes (Modal Phrygian (N E Nat)) `shouldBe` (readNotes ["E", "F", "G", "A", "B", "C", "D"])
+      Modal Phrygian (N E Nat) `shouldHaveNotes`  ["E", "F", "G", "A", "B", "C", "D"]
     it "F Lydian has all natural notes" $ do
-      notes (Modal Lydian (N F Nat)) `shouldBe` (readNotes ["F", "G", "A", "B", "C", "D", "E"])
+      Modal Lydian (N F Nat) `shouldHaveNotes`  ["F", "G", "A", "B", "C", "D", "E"]
     it "G Mixolydian has all natural notes" $ do
-      notes (Modal Mixolydian (N G Nat)) `shouldBe` (readNotes ["G", "A", "B", "C", "D", "E", "F"])
+      Modal Mixolydian (N G Nat) `shouldHaveNotes` ["G", "A", "B", "C", "D", "E", "F"]
     it "A Aeolian has all natural notes" $ do
-      notes (Modal Aeolian (N A Nat)) `shouldBe` (readNotes ["A", "B", "C", "D", "E", "F", "G"])
+      Modal Aeolian (N A Nat) `shouldHaveNotes`  ["A", "B", "C", "D", "E", "F", "G"]
     it "B Locrian has all natural notes" $ do
-      notes (Modal Locrian (N B Nat)) `shouldBe` (readNotes ["B", "C", "D", "E", "F", "G", "A"])
+      Modal Locrian (N B Nat) `shouldHaveNotes`  ["B", "C", "D", "E", "F", "G", "A"]
     it "F Ionian has flats" $ do
-      notes (Modal Ionian (N F Nat)) `shouldBe` (readNotes ["F", "G", "A", "Bb", "C", "D", "E"])
+      Modal Ionian (N F Nat) `shouldHaveNotes`  ["F", "G", "A", "Bb", "C", "D", "E"]
     it "B Aeolian has sharps" $ do
-      notes (Modal Aeolian (N B Nat)) `shouldBe` (readNotes ["B", "C#", "D", "E", "F#", "G", "A"])
+      Modal Aeolian (N B Nat) `shouldHaveNotes`  ["B", "C#", "D", "E", "F#", "G", "A"]
     it "F# Aeolian has F#, C# and G#" $ do
-      notes (Modal Aeolian (N F Sharp)) `shouldBe` (readNotes ["F#", "G#", "A", "B", "C#", "D", "E"])
+      Modal Aeolian (N F Sharp) `shouldHaveNotes` ["F#", "G#", "A", "B", "C#", "D", "E"]
     it "Bb Dorian has Bb, Eb, Ab and Db" $ do
-      notes (Modal Dorian (N B Flat)) `shouldBe` (readNotes ["Bb", "C", "Db", "Eb", "F", "G", "Ab"])
+      Modal Dorian (N B Flat) `shouldHaveNotes` ["Bb", "C", "Db", "Eb", "F", "G", "Ab"]
