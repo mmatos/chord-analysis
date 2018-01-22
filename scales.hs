@@ -5,7 +5,7 @@ data Mode = Ionian | Dorian | Phrygian | Lydian | Mixolydian | Aeolian | Locrian
 data Scale = Modal Mode Note
 
 instance WithNotes Scale where
-  notes (Modal mode startNote) = (foldNotesFrom startNote . scale alteration) mode
+  notes (Modal mode startNote) = (init . foldNotesFrom startNote . scale alteration) mode
     where alteration = sharpsOrFlats (Modal mode startNote)
 
 sharpsOrFlats (Modal mode startNote)
