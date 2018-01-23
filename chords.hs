@@ -3,25 +3,30 @@ import Data.List
 import Notes
 import Scales
 
-data Chord = Ch {note::Note, alterations::[ChordAlteration]}
-data ChordAlteration = ChAlt {nameAlt::String, chordAlterations::([(Int,Note)] -> [(Int, Note)])}
+data Chord = Ch {chordName :: String, numberedNotes :: [(Int, Note)]}
+data ChordAlteration = ChAlt {nameAlt::String, alterationEffect::([(Int,Note)] -> [(Int, Note)])}
 
 instance WithNotes Chord where
-  notes chord = (map snd.sortOn fst.foldl (\numberedNotes chalt-> chordAlterations chalt numberedNotes) (zip [1,3,5] baseChord).alterations) chord
-    where baseChord = (map ($(note chord)) [id, major 3, (\note -> perfectFifth (sharpsOrFlats (Modal Ionian note)) note)])
+  notes = map snd.sortOn fst.numberedNotes
 
 instance Eq Chord where
   (==) chord1 chord2 = notes chord1 == notes chord2
-alterChord alteration chord = chord {alterations = alterations chord ++ [alteration]}
+
+alterChord alteration (Ch name numberedNotes) = Ch (name ++ show alteration) ((alterationEffect alteration) numberedNotes)
 
 -------------------------
 -- Common chord creation
 -------------------------
 
-majorChord note = Ch note []
-minorChord note = Ch note [ChAlt "-" lowerThird]
-augChord note = Ch note [ChAlt "+" (semitoneUp 5)]
-dimChord note = Ch note [ChAlt "°" (lowerThird.lowerFifth)]
+majorChord note = Ch (show note) (zip [1,3,5] baseChordNotes)
+  where baseChordNotes = (map ($ note) [id, major 3, (\baseNote -> perfectFifth (sharpsOrFlats (Modal Ionian baseNote)) baseNote)])
+
+minorChord = alterChord (ChAlt "-" lowerThird).majorChord
+
+augChord = alterChord (ChAlt "+" (semitoneUp 5)).majorChord
+
+dimChord = alterChord (ChAlt "°" (lowerThird.lowerFifth)).majorChord
+
 susChord n note | n == 2 || n == 4 = alteredChord
   where alteredChord = alterChord (ChAlt ("sus"++show n)(replace 3 (\_ -> major n))) (majorChord note)
 
@@ -76,10 +81,16 @@ modalChordProgression mode = shiftWith modalChordProgression mode
 
 chordProgression (Modal mode startNote) = map (\(i, chordType) -> (chordType.interval i.Modal mode) startNote) (zip [1..7] (modalChordProgression mode))
 
+-------------------
+-- Chord Functions
+-------------------
+
+nthChord n scale = (chordProgression scale) !! (n-1)
+
 ---- Pritty print
 
 instance Show Chord where
-  show (Ch note alterations) = show note ++ (alterations >>= show)
+  show = chordName
   
 instance Show ChordAlteration where
   show (ChAlt name _) = name
