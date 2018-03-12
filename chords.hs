@@ -1,6 +1,5 @@
 module Chords where
 import Data.List
-import Data.Maybe
 import Notes
 import Scales
 

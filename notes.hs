@@ -6,10 +6,6 @@ data BasicNote = C | D | E | F | G | A | B deriving (Enum, Show, Eq)
 data NoteAlteration = Flat | Nat | Sharp deriving Eq
 data Note = N {basicNote::BasicNote, alt::NoteAlteration} deriving Eq
 
-class WithNotes a where
-  notes :: a -> [Note]
-
-
 allNotes = [N basicNote alt | basicNote <- [C ..], alt <- [Nat, Flat, Sharp]]
 
 noteToNumber (N C Nat) = 1
@@ -36,7 +32,24 @@ tone upOrDown preferredAlteration = semi.semi
 up = (+1)
 down = flip (-) 1
 
----- Pritty print
+---- WithNotes typeclass
+
+class WithNotes a where
+  notes :: a -> [Note]
+
+  tonic :: a -> Note
+  tonic = head.notes
+
+  isMajor :: a -> Bool
+  isMajor = includesInterval 4
+
+  isMinor :: a -> Bool
+  isMinor = includesInterval 3
+
+  includesInterval :: Integer -> a -> Bool
+  includesInterval n a = (flip elem (map noteToNumber (notes a)).(+n).noteToNumber.tonic) a
+
+---- Pritty print and read
 
 instance Show NoteAlteration where
   show Flat = "b"
