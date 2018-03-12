@@ -11,7 +11,11 @@ main = hspec $ do
       majorChord (N G Nat) `shouldHaveNotes` ["G", "B", "D"]
     it "Bb major has Bb, D and F" $ do
       majorChord (N B Flat) `shouldHaveNotes` ["Bb", "D", "F"]
-  
+    it "A major chord is major" $ do
+      isMajor (majorChord (N C Nat)) `shouldBe` True
+    it "A major chord is not minor" $ do
+      isMinor (majorChord (N C Nat)) `shouldBe` False
+
   describe "Minor Chord creation" $ do
     it "C minor has C, Eb and G" $ do
       minorChord (N C Nat) `shouldHaveNotes` ["C", "Eb", "G"]
@@ -19,6 +23,10 @@ main = hspec $ do
       minorChord (N G Nat) `shouldHaveNotes` ["G", "Bb", "D"]
     it "Bb minor has Bb, Db and F" $ do
       minorChord (N B Flat) `shouldHaveNotes` ["Bb", "Db", "F"]
+    it "A minor chord is not major" $ do
+      isMajor (minorChord (N C Nat)) `shouldBe` False
+    it "A minor chord is minor" $ do
+      isMinor (minorChord (N C Nat)) `shouldBe` True
 
   describe "Augmented Chord creation" $ do
     it "C aug has C, E and G#" $ do
@@ -27,6 +35,10 @@ main = hspec $ do
       augChord (N G Nat) `shouldHaveNotes` ["G", "B", "D#"]
     it "Bb aug has Bb, D and F#" $ do
       augChord (N B Flat) `shouldHaveNotes` ["Bb", "D", "F#"]
+    it "An aug chord is major" $ do
+      isMajor (augChord (N C Nat)) `shouldBe` True
+    it "An aug chord is not minor" $ do
+      isMinor (augChord (N C Nat)) `shouldBe` False
     
   describe "Diminished Chord creation" $ do
     it "C dim has C, Eb and Gb" $ do
@@ -35,16 +47,29 @@ main = hspec $ do
       dimChord (N G Nat) `shouldHaveNotes` ["G", "Bb", "Db"]
     it "Bb dim has Bb, Db and E" $ do
       dimChord (N B Flat) `shouldHaveNotes` ["Bb", "Db", "E"]
+    it "A dim chord is not major" $ do
+      isMajor (dimChord (N C Nat)) `shouldBe` False
+    it "A dim chord is minor" $ do
+      isMinor (dimChord (N C Nat)) `shouldBe` True
   
   describe "Sus Chord creation" $ do
     it "C sus2 has C, D and G" $ do
       susChord 2 (N C Nat) `shouldHaveNotes` ["C", "D", "G"]
     it "Bb sus2 has Bb, C and F" $ do
       susChord 2 (N B Flat) `shouldHaveNotes` ["Bb", "C", "F"]
+    it "A sus2 chord is not major" $ do
+      isMajor (susChord 2 (N C Nat)) `shouldBe` False
+    it "A sus2 chord is not minor" $ do
+      isMinor (susChord 2 (N C Nat)) `shouldBe` False
     it "C sus4 has C, F and G" $ do
       susChord 4 (N C Nat) `shouldHaveNotes` ["C", "F", "G"]
     it "Bb sus4 has Bb, Eb and F" $ do
       susChord 4 (N B Flat) `shouldHaveNotes` ["Bb", "Eb", "F"]
+    it "A sus4 chord is not major" $ do
+      isMajor (susChord 4 (N C Nat)) `shouldBe` False
+    it "A sus4 chord is not minor" $ do
+      isMinor (susChord 4 (N C Nat)) `shouldBe` False
+
 
   describe "Chord with minor seventh" $ do
     it "C7 has C, E, G and Bb" $ do

@@ -17,8 +17,6 @@ scale preferredAlteration = map (\f -> f up preferredAlteration).scalePattern
 scalePattern Ionian = tone : tone : semitone : tone : tone : tone : semitone : []
 scalePattern mode = shiftWith scalePattern mode
 
-isMajorMode = flip elem [Ionian, Lydian, Mixolydian]
-isMinorMode = not.isMajorMode
 naturalNote mode = N ([C .. B] !! (fromEnum mode)) Nat
 
 interval :: Int -> Scale -> Note

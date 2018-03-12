@@ -4,21 +4,22 @@ import Test.Hspec
 import TestHelpers
 
 main = hspec $ do
-  describe "Major and Minor modes" $ do
-    it "Ionian is major" $ do
-      isMajorMode Ionian `shouldBe` True
-    it "Dorian is minor" $ do
-      isMinorMode Dorian `shouldBe` True
-    it "Phrygian is minor" $ do
-      isMinorMode Phrygian `shouldBe` True
-    it "Lydian is major" $ do
-      isMajorMode Lydian `shouldBe` True
-    it "Mixolydian is major" $ do
-      isMajorMode Mixolydian `shouldBe` True
-    it "Aeolian is minor" $ do
-      isMinorMode Aeolian `shouldBe` True
-    it "Locrian is major" $ do
-      isMinorMode Locrian `shouldBe` True
+
+  describe "Major and Minor scales" $ do
+    it "An Ionian scale is major" $ do
+      isMajor (Modal Ionian (N C Nat)) `shouldBe` True
+    it "A Dorian scale is minor" $ do
+      isMinor (Modal Dorian (N C Nat)) `shouldBe` True
+    it "A Phrygian scale is minor" $ do
+      isMinor (Modal Phrygian (N C Nat)) `shouldBe` True
+    it "A Lydian scale is major" $ do
+      isMajor (Modal Lydian (N C Nat)) `shouldBe` True
+    it "A Mixolydian scale is major" $ do
+      isMajor (Modal Mixolydian (N C Nat)) `shouldBe` True
+    it "An Aeolian scale is minor" $ do
+      isMinor (Modal Aeolian (N C Nat)) `shouldBe` True
+    it "A Locrian scale is major" $ do
+      isMinor (Modal Locrian (N C Nat)) `shouldBe` True
 
   describe "Natural notes for each mode" $ do
     it "C is natural for Ionian" $ do
