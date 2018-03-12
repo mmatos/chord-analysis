@@ -1,5 +1,6 @@
 module Chords where
 import Data.List
+import Data.Maybe
 import Notes
 import Scales
 
@@ -31,7 +32,7 @@ susChord n note | n == 2 || n == 4 = alteredChord
   where alteredChord = alterChord (ChAlt ("sus"++show n)(replace 3 (\_ -> major n))) (majorChord note)
 
 dim7Chord = alterChord (ChAlt "7" (add 6 major)).dimChord
-halfDim7Chord = alterChord flatFive.alterChord seventh.minorChord
+halfDim7Chord = alterChord flatFive.chord7.minorChord
 
 chord7 = alterChord seventh
 chordMaj7 = alterChord majorSeventh
