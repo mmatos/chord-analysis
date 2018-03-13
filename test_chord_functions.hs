@@ -35,3 +35,23 @@ main = hspec $ do
       applied 7 5 (Modal Aeolian (N F Nat)) `shouldBe` (majorChord (N B Flat))
     it "I/V chord for C Mixolydian" $ do
       applied 1 5 (Modal Mixolydian (N C Nat)) `shouldBe` (majorChord (N G Nat))
+
+  describe "Borrowed Nth Chord from other mode functions in a scale" $ do
+    it "V Aeolian chord for C Ionian" $ do
+      borrow 5 Aeolian (Modal Ionian (N C Nat)) `shouldBe` (minorChord (N G Nat))
+    it "V Phrygian chord for F Ionian" $ do
+      borrow 5 Phrygian (Modal Ionian (N F Nat)) `shouldBe` (dimChord (N C Nat))
+    it "II Aeolian chord for C Ionian" $ do
+      borrow 2 Aeolian (Modal Ionian (N C Nat)) `shouldBe` (dimChord (N D Nat))
+    it "VII Aeolian chord for F Ionian" $ do
+      borrow 7 Aeolian (Modal Ionian (N F Nat)) `shouldBe` (majorChord (N E Flat))
+    it "VII Phrygian chord for F Ionian" $ do
+      borrow 7 Phrygian (Modal Ionian (N F Nat)) `shouldBe` (minorChord (N E Flat))
+    it "III Lydian chord for C Mixolydian" $ do
+      borrow 3 Lydian (Modal Mixolydian (N C Nat)) `shouldBe` (minorChord (N E Nat))
+    it "IV Lydian chord for C Mixolydian" $ do
+      borrow 4 Lydian (Modal Mixolydian (N C Nat)) `shouldBe` (dimChord (N F Sharp))
+    it "II Lydian chord for D Dorian" $ do
+      borrow 2 Lydian (Modal Dorian (N D Nat)) `shouldBe` (majorChord (N E Nat))
+    it "VI Lydian chord for D Locrian" $ do
+      borrow 6 Lydian (Modal Locrian (N D Nat)) `shouldBe` (minorChord (N B Nat))
