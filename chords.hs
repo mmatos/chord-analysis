@@ -10,7 +10,9 @@ instance WithNotes Chord where
   notes = map snd.sortOn fst.numberedNotes
 
 instance Eq Chord where
-  (==) chord1 chord2 = notes chord1 == notes chord2
+--  (==) chord1 chord2 = notes chord1 == notes chord2
+-- At least for now allow matching notes with the same sound (but not exactly equal)
+  (==) chord1 = all (\(n1, n2) -> sameSound n1 n2).zip (notes chord1).notes
 
 alterChord alteration (Ch name numberedNotes) = Ch (name ++ show alteration) ((alterationEffect alteration) numberedNotes)
 
