@@ -91,6 +91,10 @@ applied nth ofN scale =
   let newScale =  scale { startNote = tonic (nthChord ofN scale) }
   in nthChord nth newScale
 
+borrow nth otherMode scale =
+  let newScale = scale { mode = otherMode }
+  in nthChord nth newScale
+
 ---- Pritty print
 
 instance Show Chord where
