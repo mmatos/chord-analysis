@@ -32,6 +32,9 @@ tone upOrDown preferredAlteration = semi.semi
 up = (+1)
 down = flip (-) 1
 
+-- Defaulting to Sharp, as it's not of interest
+interval n toneOrSemitone note = (foldl (flip ($)) note.take n.repeat.toneOrSemitone up) Sharp
+
 ---- WithNotes typeclass
 
 class WithNotes a where
@@ -41,13 +44,13 @@ class WithNotes a where
   tonic = head.notes
 
   isMajor :: a -> Bool
-  isMajor = includesInterval 4
+  isMajor = includesInterval (interval 2 tone)
 
   isMinor :: a -> Bool
-  isMinor = includesInterval 3
+  isMinor = includesInterval (interval 3 semitone)
 
-  includesInterval :: Integer -> a -> Bool
-  includesInterval n a = (flip elem (map noteToNumber (notes a)).(+n).noteToNumber.tonic) a
+  includesInterval :: (Note -> Note) -> a -> Bool
+  includesInterval interval a = (any (sameSound ((interval.tonic) a)).notes) a
 
 ---- Pritty print and read
 

@@ -19,8 +19,8 @@ scalePattern mode = shiftWith scalePattern mode
 
 naturalNote mode = N ([C .. B] !! (fromEnum mode)) Nat
 
-interval :: Int -> Scale -> Note
-interval n scale = notes scale !! mod (n-1) 7
+scaleInterval :: Int -> Scale -> Note
+scaleInterval n scale = notes scale !! mod (n-1) 7
 
 chromatics preferredAlteration = iterate (semitone up preferredAlteration)
 

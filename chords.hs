@@ -59,10 +59,10 @@ upToOvertone n startChord = (foldl (flip alterChord) (chord7 startChord).map ove
 -- Base alteration functions
 -----------------------------
 
-major n  = interval n . Modal Ionian
-minor n  = interval n . Modal Aeolian
+major n  = scaleInterval n . Modal Ionian
+minor n  = scaleInterval n . Modal Aeolian
 lowerThird = replace 3 minor
-lowerFifth = replace 5 (\n -> interval n.Modal Locrian)
+lowerFifth = replace 5 (\n -> scaleInterval n.Modal Locrian)
 
 -- Is it ok to make this always major?
 semitoneUp n = replace n (\m -> semitone up Sharp . major m)
@@ -79,7 +79,7 @@ add n intervalFunction numberedNotes = (n, (intervalFunction n) firstNote) : num
 modalChordProgression Ionian = [majorChord, minorChord, minorChord, majorChord, majorChord, minorChord, dimChord]
 modalChordProgression mode = shiftWith modalChordProgression mode
 
-chordProgression (Modal mode startNote) = map (\(i, chordType) -> (chordType.interval i.Modal mode) startNote) (zip [1..7] (modalChordProgression mode))
+chordProgression (Modal mode startNote) = map (\(i, chordType) -> (chordType.scaleInterval i.Modal mode) startNote) (zip [1..7] (modalChordProgression mode))
 
 -------------------
 -- Chord Functions
