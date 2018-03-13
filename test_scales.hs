@@ -23,19 +23,19 @@ main = hspec $ do
 
   describe "Natural notes for each mode" $ do
     it "C is natural for Ionian" $ do
-      naturalNote Ionian `shouldBe` (readNote "C")
+      naturalNote Ionian `shouldBe` (N C Nat)
     it "D is natural for Dorian" $ do
-      naturalNote Dorian `shouldBe` (readNote "D")
+      naturalNote Dorian `shouldBe` (N D Nat)
     it "E is natural for Phrygian" $ do
-      naturalNote Phrygian `shouldBe` (readNote "E")
+      naturalNote Phrygian `shouldBe` (N E Nat)
     it "F is natural for Lydian" $ do
-      naturalNote Lydian `shouldBe` (readNote "F")
+      naturalNote Lydian `shouldBe` (N F Nat)
     it "G is natural for Mixolydian" $ do
-      naturalNote Mixolydian `shouldBe` (readNote "G")
+      naturalNote Mixolydian `shouldBe` (N G Nat)
     it "A is natural for Aeolian" $ do
-      naturalNote Aeolian `shouldBe` (readNote "A")
+      naturalNote Aeolian `shouldBe` (N A Nat)
     it "B is natural for Locrian" $ do
-      naturalNote Locrian `shouldBe` (readNote "B")
+      naturalNote Locrian `shouldBe` (N B Nat)
 
   describe "Notes in a scale" $ do
     it "C Ionian has all natural notes" $ do

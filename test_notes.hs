@@ -48,3 +48,11 @@ main = hspec $ do
       tone up Flat (N B Nat) `shouldBe` (N D Flat)
     it "Db is a tone down from Eb when expecting flats" $ do
       tone down Flat (N E Flat) `shouldBe` (N D Flat)
+
+  describe "Note intervales" $ do
+    it "Theres a 3 tones interval between C and F#" $ do
+      interval 3 tone (N C Nat) `shouldBe` (N F Sharp)
+    it "Theres a 7 semitones interval between C and G" $ do
+      interval 7 semitone (N C Nat) `shouldBe` (N G Nat)
+    it "Theres a 5 semitones interval between G and C" $ do
+      interval 5 semitone (N G Nat) `shouldBe` (N C Nat)
