@@ -1,3 +1,4 @@
+import ChordAnalysis
 import Chords
 import Notes
 import Scales
