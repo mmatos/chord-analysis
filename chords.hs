@@ -87,6 +87,10 @@ chordProgression (Modal mode startNote) = map (\(i, chordType) -> (chordType.int
 
 nthChord n scale = (chordProgression scale) !! (n-1)
 
+applied nth ofN scale =
+  let newScale =  scale { startNote = tonic (nthChord ofN scale) }
+  in nthChord nth newScale
+
 ---- Pritty print
 
 instance Show Chord where

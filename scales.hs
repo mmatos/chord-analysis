@@ -2,7 +2,7 @@ module Scales where
 import Notes
 
 data Mode = Ionian | Dorian | Phrygian | Lydian | Mixolydian | Aeolian | Locrian deriving (Eq, Show, Enum)
-data Scale = Modal Mode Note
+data Scale = Modal {mode :: Mode, startNote :: Note}
 
 instance WithNotes Scale where
   notes (Modal mode startNote) = (init . foldNotesFrom startNote . scale alteration) mode
