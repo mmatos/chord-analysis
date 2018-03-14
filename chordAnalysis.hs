@@ -25,3 +25,16 @@ applied nth ofN scale =
 borrow nth otherMode scale =
   let newScale = scale { mode = otherMode }
   in nthChord nth newScale
+
+--------------------
+-- Chord analysis!
+--------------------
+
+allPossibleFunctions = nthFunctions ++ appliedFunctions ++ borrowedFunctions
+  where
+    nths = zip ["I", "II", "III", "IV", "V", "VI", "VII"] [1..7]
+    nthFunctions = [ (numeral, nthChord nth) | (numeral, nth) <- nths ]
+    appliedFunctions = [ (numeral ++ "/" ++ ofNumeral, applied nth ofN) | (numeral, nth) <- nths, (ofNumeral, ofN) <- nths ]
+    borrowedFunctions = [ (numeral ++ " " ++ show mode, borrow nth mode) | (numeral, nth) <- nths, mode <- [Ionian .. Locrian] ]
+
+analyzeChord chord scale = (map fst . filter ((== chord) . ($ scale) . snd)) allPossibleFunctions
