@@ -30,6 +30,13 @@ circleOfFifths = flip foldNotesFrom ((take 6 (fifthsWith Sharp)) ++ (take 6 (dro
 
 perfectFifth preferredAlteration = head.drop 7.chromatics preferredAlteration
 
+----
+-- Common scale creation
+----
+
+majorScale = Modal Ionian
+minorScale = Modal Aeolian
+
 ----  AUX
 shiftWith f = shiftFirst.f.pred
 shiftFirst (x:xs) = xs ++ [x]
