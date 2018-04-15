@@ -34,7 +34,7 @@ allPossibleFunctions = nthFunctions ++ appliedFunctions ++ borrowedFunctions
   where
     nths = zip ["I", "II", "III", "IV", "V", "VI", "VII"] [1..7]
     nthFunctions = [ (numeral, nthChord nth) | (numeral, nth) <- nths ]
-    appliedFunctions = [ (numeral ++ "/" ++ ofNumeral, applied nth ofN) | (numeral, nth) <- nths, (ofNumeral, ofN) <- nths ]
+    appliedFunctions = [ (numeral ++ "/" ++ ofNumeral, applied nth ofN) | (numeral, nth) <- nths, (ofNumeral, ofN) <- nths, ofN > 1 ]
     borrowedFunctions = [ (numeral ++ " " ++ show mode, borrow nth mode) | (numeral, nth) <- nths, mode <- [Ionian .. Locrian] ]
 
 analyzeChord chord scale = (map fst . filter ((== chord) . ($ scale) . snd)) allPossibleFunctions
